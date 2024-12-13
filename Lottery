@@ -1,0 +1,44 @@
+import random
+
+def generate_lottery_numbers():
+    return sorted(random.sample(range(1, 50), 6))
+
+def get_user_numbers():
+    print("Enter 6 unique numbers between 1 and 49:")
+    user_numbers = set()
+    while len(user_numbers) < 6:
+        try:
+            num = int(input(f"Enter number {len(user_numbers) + 1}: "))
+            if num < 1 or num > 49:
+                print("Number out of range. Try again.")
+            elif num in user_numbers:
+                print("You already entered this number. Try again.")
+            else:
+                user_numbers.add(num)
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+    return sorted(user_numbers)
+
+def check_results(lottery_numbers, user_numbers):
+    matching_numbers = set(lottery_numbers) & set(user_numbers)
+    return len(matching_numbers), matching_numbers
+
+def main():
+    print("Welcome to the Lottery Game!")
+    lottery_numbers = generate_lottery_numbers()
+    print("Lottery numbers have been drawn. Try your luck!")
+
+    user_numbers = get_user_numbers()
+
+    print(f"Your numbers: {user_numbers}")
+    print(f"Winning numbers: {lottery_numbers}")
+
+    matches, matching_numbers = check_results(lottery_numbers, user_numbers)
+
+    if matches > 0:
+        print(f"Congratulations! You matched {matches} number(s): {sorted(matching_numbers)}")
+    else:
+        print("No matches this time. Better luck next time!")
+
+if name == "main":
+    main()
